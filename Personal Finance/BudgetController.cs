@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PersonalFinance.Extensions;
 
-namespace Personal_Finance
+namespace PersonalFinance
 {
 	[ApiController]
 	[Route("api/[controller]")]
 	public class BudgetController : ControllerBase
-    {
+	{
 		[HttpPost]
 		[Route("[action]")]
 		public IActionResult Calculate(IFormFile file)
-        {
-			return Ok("empty");
-        }
-    }
+		{
+			var lines = file.ToLines();
+			return Ok(lines);
+		}
+	}
 }
