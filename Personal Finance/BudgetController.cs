@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Personal_Finance
 {
@@ -6,8 +7,9 @@ namespace Personal_Finance
 	[Route("api/[controller]")]
 	public class BudgetController : ControllerBase
     {
+		[HttpPost]
 		[Route("[action]")]
-        public ActionResult Calculate()
+		public IActionResult Calculate(IFormFile file)
         {
 			return Ok("empty");
         }
