@@ -2,14 +2,14 @@
 
 namespace Personal_Finance
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class BudgetController : ControllerBase
+	[ApiController]
+	[Route("api/[controller]")]
+	public class BudgetController : ControllerBase
     {
-        [Route("")]
-        public ActionResult Get()
+		[Route("[action]")]
+        public ActionResult Calculate()
         {
-            return Ok("Empty");
+			return Ok("empty");
         }
     }
 }
