@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Personal_Finance
+namespace PersonalFinance
 {
 	public class Program
 	{

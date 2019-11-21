@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using PersonalFinance.Extensions;
 
@@ -10,10 +11,16 @@ namespace PersonalFinance
 	{
 		[HttpPost]
 		[Route("[action]")]
-		public IActionResult Calculate(IFormFile file)
-		{
+        [Consumes("multipart/form-data")]
+        public IList<Category> Calculate([FromForm] BudgetRequest budgetRequest)
+        {
+            var file = budgetRequest.File;
 			var lines = file.ToLines();
-			return Ok(lines);
-		}
+            var categories = JsonSerializer.Deserialize(
+                budgetRequest.Categories, typeof(List<Category>),
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) as List<Category>;
+            var budget = new Budget();
+            return budget.Calculate(lines, categories);
+        }
 	}
 }
