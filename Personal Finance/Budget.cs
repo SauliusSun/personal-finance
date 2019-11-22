@@ -10,16 +10,22 @@ namespace PersonalFinance
 		public IList<Category> Calculate(IList<string> lines, IList<Category> categories)
 		{
 			var transactions = CreateTransactions(lines);
+            var transactionsWittNoCategory = new List<Transaction>();
 
 			foreach (var transaction in transactions)
 			{
-				var categoryFound = categories
+				var categoryResult = categories
 					.FirstOrDefault(category => category.Terms
 						.Any(term => transaction.ReceiverName
 							.Contains(term, StringComparison.InvariantCultureIgnoreCase)));
-				categoryFound?.Transactions.Add(transaction);
-			}
 
+                if (categoryResult == null)
+                    transactionsWittNoCategory.Add(transaction);
+                else
+                    categoryResult.Transactions.Add(transaction);
+            }
+
+            categories.Add(new Category("No category", transactionsWittNoCategory));
 			return categories;
 		}
 
