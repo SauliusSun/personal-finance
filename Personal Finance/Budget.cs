@@ -31,7 +31,7 @@ namespace PersonalFinance
 
 		private static IEnumerable<Transaction> CreateTransactions(IEnumerable<string> lines)
 		{
-			return lines.Skip(1).Select(line => line.Split("\";\""))
+			var transactions = lines.Skip(1).Select(line => line.Split("\";\""))
 				.Select(lineFields => new Transaction
 				{
 					AccountNumber = lineFields[0],
@@ -50,6 +50,8 @@ namespace PersonalFinance
 					AccountBalance = lineFields[13],
 					PaymentCode = lineFields[14]
 				});
-		}
+
+            return transactions.Where(t => t.DebitOrCredit == "D");
+        }
 	}
 }
